@@ -1,13 +1,13 @@
 ﻿using Amazon;
 using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DocumentModel;
-using SecApiReportDataLoader.Models;
+using SecApiFinancialStatementDataLoader.Models;
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace SecApiReportDataLoader.Repositories
+namespace SecApiFinancialStatementDataLoader.Repositories
 {
     public class DynamoRepository
     {

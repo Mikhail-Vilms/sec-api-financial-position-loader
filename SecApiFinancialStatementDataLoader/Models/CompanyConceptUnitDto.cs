@@ -1,4 +1,4 @@
-﻿namespace SecApiReportDataLoader.Models
+﻿namespace SecApiFinancialStatementDataLoader.Models
 {
     public class CompanyConceptUnitDto
     {

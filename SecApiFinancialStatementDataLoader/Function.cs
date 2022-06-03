@@ -1,24 +1,27 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
 using Amazon.Lambda.Core;
 using Amazon.Lambda.SQSEvents;
-using SecApiReportDataLoader.Models;
-using SecApiReportDataLoader.Services;
-using System;
-using System.Threading.Tasks;
+using SecApiFinancialStatementDataLoader.Models;
+using SecApiFinancialStatementDataLoader.Services;
 
 // Assembly attribute to enable the Lambda function's JSON input to be converted into a .NET class.
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer))]
 
-namespace SecApiReportDataLoader
+namespace SecApiFinancialStatementDataLoader
 {
     public class Function
     {
         private readonly IDeserializer _deserializer;
-        private readonly ReportDataLoaderService _reportDataLoaderService;
+        private readonly Loader _loader;
 
         public Function()
         {
             _deserializer = new Deserializer();
-            _reportDataLoaderService = new ReportDataLoaderService();
+            _loader = new Loader();
         }
 
         /// <summary>
@@ -55,7 +58,7 @@ namespace SecApiReportDataLoader
                 return;
             }
 
-            await _reportDataLoaderService.Load(triggerMessage, Log);
+            await _loader.Load(triggerMessage, Log);
 
             Log($"Finished processing. <<<<<");
         }

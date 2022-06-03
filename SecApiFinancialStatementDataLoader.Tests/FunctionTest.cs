@@ -1,18 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-using Xunit;
-using Amazon.Lambda.Core;
-using Amazon.Lambda.TestUtilities;
-
-using SecApiReportDataLoader;
 using Amazon.Lambda.SQSEvents;
-using SecApiReportDataLoader.Models;
+using Amazon.Lambda.TestUtilities;
+using SecApiFinancialStatementDataLoader.Models;
+using System.Collections.Generic;
 using System.Text.Json;
+using System.Threading.Tasks;
+using Xunit;
 
-namespace SecApiReportDataLoader.Tests
+namespace SecApiFinancialStatementDataLoader.Tests
 {
     public class FunctionTest
     {
@@ -36,7 +30,6 @@ namespace SecApiReportDataLoader.Tests
                     new SQSEvent.SQSMessage{ Body = sqsMessageStr}
                 }
             };
-
 
 
             // Invoke the lambda function and confirm the string was upper cased.

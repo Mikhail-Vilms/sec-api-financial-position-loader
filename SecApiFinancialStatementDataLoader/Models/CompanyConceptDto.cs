@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SecApiReportDataLoader.Models
+namespace SecApiFinancialStatementDataLoader.Models
 {
     /// <summary>
     /// Class reflects response from SEC API when we request values for specific company for specific financial position

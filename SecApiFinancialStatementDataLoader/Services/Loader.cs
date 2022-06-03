@@ -1,18 +1,18 @@
-﻿using SecApiReportDataLoader.Models;
-using SecApiReportDataLoader.Repositories;
+﻿using SecApiFinancialStatementDataLoader.Models;
+using SecApiFinancialStatementDataLoader.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace SecApiReportDataLoader.Services
+namespace SecApiFinancialStatementDataLoader.Services
 {
-    public class ReportDataLoaderService
+    public class Loader
     {
         private readonly SecApiClientService _secApiClientService;
         private readonly DynamoRepository _dynamoRepository;
 
-        public ReportDataLoaderService()
+        public Loader()
         {
             _secApiClientService = new SecApiClientService();
             _dynamoRepository = new DynamoRepository();
