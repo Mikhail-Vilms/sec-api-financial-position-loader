@@ -18,18 +18,24 @@ namespace SecApiReportDataLoader.Services
             _dynamoRepository = new DynamoRepository();
         }
 
-        public async Task LoadReportData(string cikNumber, string financialPosition, string ticker)
+        public async Task Load(LambdaTriggerMessage triggerMsg, Action<string> logger)
         {
             // Send HTTP Request to SEC API
-            string resultJson = await _secApiClientService.RetrieveCashFlowValuesByEndDate(cikNumber, financialPosition);
+            string resultJson = await _secApiClientService.RetrieveCashFlowValuesByEndDate(
+                triggerMsg.CikNumber,
+                triggerMsg.TickerSymbol,
+                triggerMsg.FinancialPosition,
+                logger);
+
 
             // If no result has been returned - skip current tag
             if (resultJson.StartsWith("<"))
             {
+                logger("Invalid response that can't be parsed has been received; Skipping current financial position.");
                 return;
             }
 
-            // Deserialize
+            // Deserialize SEC response
             CompanyConceptDto companyConceptDto = JsonSerializer
                 .Deserialize<CompanyConceptDto>(
                     resultJson,
@@ -38,18 +44,20 @@ namespace SecApiReportDataLoader.Services
                         PropertyNameCaseInsensitive = true
                     });
 
-            // Transform to list of items
+            // Transform response to the list of items
             List<CompanyConceptUnitDto> concepts = companyConceptDto.Units["USD"];
 
             // Extract 10-K numbers
             Dictionary<string, string> valuesFrom10KsByEndDate = Filter10kNumbers(concepts);
+            logger($"{valuesFrom10KsByEndDate.Count} numbers have been fetched for the {triggerMsg.FinancialPosition} position for the {triggerMsg.TickerSymbol}/{triggerMsg.CikNumber}");
+
 
             // Save to Dynamo
-            await _dynamoRepository.SaveReportNumbersByDate(
-                cikNumber,
-                financialPosition,
-                ticker,
-                valuesFrom10KsByEndDate);
+            await _dynamoRepository.SaveFinancialStatementNumbersByDate(
+                triggerMsg,
+                companyConceptDto,
+                valuesFrom10KsByEndDate,
+                logger);
         }
 
         private Dictionary<string, string> Filter10kNumbers(List<CompanyConceptUnitDto> concepts)

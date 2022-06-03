@@ -2,6 +2,7 @@
 using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DocumentModel;
 using SecApiReportDataLoader.Models;
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -10,22 +11,27 @@ namespace SecApiReportDataLoader.Repositories
 {
     public class DynamoRepository
     {
-        private string _tableName = "sec-api-company-concepts";
+        private readonly string _tableName = "Sec-Api-Data";
 
-        public async Task SaveReportNumbersByDate(
-            string cik,
-            string tag,
-            string ticker,
-            Dictionary<string, string> valuesByDate)
+        public async Task SaveFinancialStatementNumbersByDate(
+            LambdaTriggerMessage triggerMsg,
+            CompanyConceptDto companyConceptDto,
+            Dictionary<string, string> valuesByDate,
+            Action<string> logger)
         {
             using var ddbClient = new AmazonDynamoDBClient(RegionEndpoint.USEast1);
             var dynamoTable = Table.LoadTable(ddbClient, _tableName, true);
 
-            var newItem = new DynamoDbItem
+            logger($"Saving to Dynamo: PartitionKey: {triggerMsg.CikNumber}; SortKey: {triggerMsg.FinancialStatement}_{triggerMsg.FinancialPosition}");
+            var newItem = new
             {
-                cik = cik,
-                tag = tag,
-                ticker = ticker,
+                PartitionKey = triggerMsg.CikNumber,
+                SortKey = $"{triggerMsg.FinancialStatement}_{triggerMsg.FinancialPosition}",
+                DisplayName = companyConceptDto.Label,
+                Description = companyConceptDto.Description,
+                Taxanomy = companyConceptDto.Taxonomy,
+                TickerSymbol = triggerMsg.TickerSymbol,
+                CompanyName = companyConceptDto.EntityName,
                 ValuesByDate = valuesByDate
             };
 
