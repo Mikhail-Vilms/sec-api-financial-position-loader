@@ -1,4 +1,4 @@
-﻿namespace SecApiFinancialStatementDataLoader.Models
+﻿namespace SecApiFinancialPositionLoader.Models
 {
     public class LambdaTriggerMessage
     {

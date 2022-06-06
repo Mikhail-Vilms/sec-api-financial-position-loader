@@ -1,17 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 using Amazon.Lambda.Core;
 using Amazon.Lambda.SQSEvents;
-using SecApiFinancialStatementDataLoader.Models;
-using SecApiFinancialStatementDataLoader.Services;
+using SecApiFinancialPositionLoader.Models;
+using SecApiFinancialPositionLoader.Services;
+using System;
+using System.Threading.Tasks;
 
 // Assembly attribute to enable the Lambda function's JSON input to be converted into a .NET class.
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer))]
 
-namespace SecApiFinancialStatementDataLoader
+namespace SecApiFinancialPositionLoader
 {
     public class Function
     {

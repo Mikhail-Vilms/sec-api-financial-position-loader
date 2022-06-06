@@ -1,6 +1,6 @@
 locals {
-    lambdaProjectName = "SecApiFinancialStatementDataLoader"
-    lambdaName = "Sec-Api-Financial-Statement-Data-Loader"
-    dynamoDbTableName = "Sec-Api-Data"
-    sourceSns = "Sec-Api-Financial-Statement-Data-To-Process" 
+    lambdaProjectName = "SecApiFinancialPositionLoader"
+    lambdaName = "Sec-Api-Financial-Position-Loader"
+    dynamoDbTableName = "Sec-Api-Financial-Data"
+    sourceSns = "Sec-Api-Financial-Positions-To-Load" 
 }

@@ -1,7 +1,7 @@
 ﻿using Amazon.Lambda.SQSEvents;
-using SecApiFinancialStatementDataLoader.Models;
+using SecApiFinancialPositionLoader.Models;
 
-namespace SecApiFinancialStatementDataLoader.Services
+namespace SecApiFinancialPositionLoader.Services
 {
     public interface IDeserializer
     {

@@ -1,11 +1,11 @@
-﻿using SecApiFinancialStatementDataLoader.Models;
-using SecApiFinancialStatementDataLoader.Repositories;
+﻿using SecApiFinancialPositionLoader.Models;
+using SecApiFinancialPositionLoader.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace SecApiFinancialStatementDataLoader.Services
+namespace SecApiFinancialPositionLoader.Services
 {
     public class Loader
     {

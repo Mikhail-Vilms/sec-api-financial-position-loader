@@ -38,12 +38,12 @@ If already installed check if new version is available.
 
 Execute unit tests
 ```
-    cd "SecApiFinancialStatementDataLoader/test/SecApiFinancialStatementDataLoader.Tests"
+    cd "SecApiFinancialPositionLoader/test/SecApiFinancialPositionLoader.Tests"
     dotnet test
 ```
 
 Deploy function to AWS Lambda
 ```
-    cd "SecApiFinancialStatementDataLoader/src/SecApiFinancialStatementDataLoader"
+    cd "SecApiFinancialPositionLoader/src/SecApiFinancialPositionLoader"
     dotnet lambda deploy-function
 ```

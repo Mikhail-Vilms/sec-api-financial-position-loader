@@ -1,17 +1,17 @@
 ﻿using Amazon;
 using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DocumentModel;
-using SecApiFinancialStatementDataLoader.Models;
+using SecApiFinancialPositionLoader.Models;
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace SecApiFinancialStatementDataLoader.Repositories
+namespace SecApiFinancialPositionLoader.Repositories
 {
     public class DynamoRepository
     {
-        private readonly string _tableName = "Sec-Api-Data";
+        private readonly string _tableName = "Sec-Api-Financial-Data";
 
         public async Task SaveFinancialStatementNumbersByDate(
             LambdaTriggerMessage triggerMsg,
@@ -19,7 +19,7 @@ namespace SecApiFinancialStatementDataLoader.Repositories
             Dictionary<string, string> valuesByDate,
             Action<string> logger)
         {
-            using var ddbClient = new AmazonDynamoDBClient(RegionEndpoint.USEast1);
+            using var ddbClient = new AmazonDynamoDBClient(RegionEndpoint.USWest2);
             var dynamoTable = Table.LoadTable(ddbClient, _tableName, true);
 
             logger($"Saving to Dynamo: PartitionKey: {triggerMsg.CikNumber}; SortKey: {triggerMsg.FinancialStatement}_{triggerMsg.FinancialPosition}");

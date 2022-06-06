@@ -1,8 +1,8 @@
 ﻿using Amazon.Lambda.SQSEvents;
-using SecApiFinancialStatementDataLoader.Models;
+using SecApiFinancialPositionLoader.Models;
 using System.Text.Json;
 
-namespace SecApiFinancialStatementDataLoader.Services
+namespace SecApiFinancialPositionLoader.Services
 {
     public class Deserializer : IDeserializer
     {

@@ -1,12 +1,12 @@
 using Amazon.Lambda.SQSEvents;
 using Amazon.Lambda.TestUtilities;
-using SecApiFinancialStatementDataLoader.Models;
+using SecApiFinancialPositionLoader.Models;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace SecApiFinancialStatementDataLoader.Tests
+namespace SecApiFinancialPositionLoader.Tests
 {
     public class FunctionTest
     {
