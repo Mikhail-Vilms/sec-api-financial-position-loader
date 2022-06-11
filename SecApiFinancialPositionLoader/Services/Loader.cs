@@ -1,4 +1,5 @@
-﻿using SecApiFinancialPositionLoader.Models;
+﻿using SecApiFinancialPositionLoader.Heplers;
+using SecApiFinancialPositionLoader.Models;
 using SecApiFinancialPositionLoader.Repositories;
 using System;
 using System.Collections.Generic;
@@ -48,15 +49,15 @@ namespace SecApiFinancialPositionLoader.Services
             List<CompanyConceptUnitDto> concepts = companyConceptDto.Units["USD"];
 
             // Extract 10-K numbers
-            Dictionary<string, string> valuesFrom10KsByEndDate = Filter10kNumbers(concepts);
-            logger($"{valuesFrom10KsByEndDate.Count} numbers have been fetched for the {triggerMsg.FinancialPosition} position for the {triggerMsg.TickerSymbol}/{triggerMsg.CikNumber}");
+            IList<SecApiCompanyFact> facts = CompanyConceptsHelper.FilterBalanceSheetNumbers(concepts);
+            logger($"{facts.Count} numbers(financial facts) have been fetched for the {triggerMsg.FinancialPosition} position for the {triggerMsg.TickerSymbol}/{triggerMsg.CikNumber}");
 
 
             // Save to Dynamo
             await _dynamoRepository.SaveFinancialStatementNumbersByDate(
                 triggerMsg,
                 companyConceptDto,
-                valuesFrom10KsByEndDate,
+                facts,
                 logger);
         }
 

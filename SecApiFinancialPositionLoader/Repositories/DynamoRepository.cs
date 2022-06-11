@@ -16,7 +16,7 @@ namespace SecApiFinancialPositionLoader.Repositories
         public async Task SaveFinancialStatementNumbersByDate(
             LambdaTriggerMessage triggerMsg,
             CompanyConceptDto companyConceptDto,
-            Dictionary<string, string> valuesByDate,
+            IList<SecApiCompanyFact> facts,
             Action<string> logger)
         {
             using var ddbClient = new AmazonDynamoDBClient(RegionEndpoint.USWest2);
@@ -32,7 +32,7 @@ namespace SecApiFinancialPositionLoader.Repositories
                 Taxanomy = companyConceptDto.Taxonomy,
                 TickerSymbol = triggerMsg.TickerSymbol,
                 CompanyName = companyConceptDto.EntityName,
-                ValuesByDate = valuesByDate
+                Facts = facts
             };
 
             var documentJson = JsonSerializer.Serialize(newItem);

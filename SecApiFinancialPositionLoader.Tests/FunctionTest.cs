@@ -21,6 +21,14 @@ namespace SecApiFinancialPositionLoader.Tests
                 FinancialPosition = "NetCashProvidedByUsedInInvestingActivities"
             };
 
+            //LambdaTriggerMessage sqsMessage = new LambdaTriggerMessage()
+            //{
+            //    CikNumber = "CIK0000200406",
+            //    TickerSymbol = "JNJ",
+            //    FinancialStatement = "BalanceSheet",
+            //    FinancialPosition = "LiabilitiesCurrent"
+            //};
+
             string sqsMessageStr = JsonSerializer.Serialize(sqsMessage);
 
             var sqsEvent = new SQSEvent
