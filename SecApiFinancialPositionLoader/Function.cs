@@ -55,7 +55,14 @@ namespace SecApiFinancialPositionLoader
                 return;
             }
 
-            await _loader.Load(triggerMessage, Log);
+            try
+            {
+                await _loader.Load(triggerMessage, Log);
+            }
+            catch (Exception ex)
+            {
+                Log($"Failed to process message: triggerMessage; msg: {ex}");
+            }
 
             Log($"Finished processing. <<<<<");
         }
