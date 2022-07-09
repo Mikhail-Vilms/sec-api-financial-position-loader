@@ -10,24 +10,24 @@ namespace SecApiFinancialPositionLoader.Tests
 {
     public class FunctionTest
     {
-        [Fact]
+        // [Fact]
         public async Task TestToUpperFunction()
         {
-            LambdaTriggerMessage sqsMessage = new LambdaTriggerMessage()
-            {
-                CikNumber = "CIK0000200406",
-                TickerSymbol = "JNJ",
-                FinancialStatement = "CashFlowStatement",
-                FinancialPosition = "NetCashProvidedByUsedInInvestingActivities"
-            };
-
             //LambdaTriggerMessage sqsMessage = new LambdaTriggerMessage()
             //{
             //    CikNumber = "CIK0000200406",
             //    TickerSymbol = "JNJ",
-            //    FinancialStatement = "BalanceSheet",
-            //    FinancialPosition = "LiabilitiesCurrent"
+            //    FinancialStatement = "CashFlowStatement",
+            //    FinancialPosition = "NetCashProvidedByUsedInInvestingActivities"
             //};
+
+            LambdaTriggerMessage sqsMessage = new LambdaTriggerMessage()
+            {
+                CikNumber = "CIK0000200406",
+                TickerSymbol = "JNJ",
+                FinancialStatement = "BalanceSheet",
+                FinancialPosition = "LiabilitiesCurrent"
+            };
 
             string sqsMessageStr = JsonSerializer.Serialize(sqsMessage);
 
@@ -38,7 +38,6 @@ namespace SecApiFinancialPositionLoader.Tests
                     new SQSEvent.SQSMessage{ Body = sqsMessageStr}
                 }
             };
-
 
             // Invoke the lambda function and confirm the string was upper cased.
             var function = new Function();

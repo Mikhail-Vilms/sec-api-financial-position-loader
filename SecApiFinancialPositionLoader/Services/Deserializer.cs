@@ -1,4 +1,5 @@
 ﻿using Amazon.Lambda.SQSEvents;
+using SecApiFinancialPositionLoader.IServices;
 using SecApiFinancialPositionLoader.Models;
 using System.Text.Json;
 
