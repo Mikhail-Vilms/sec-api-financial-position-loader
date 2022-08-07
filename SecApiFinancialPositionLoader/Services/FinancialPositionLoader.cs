@@ -96,14 +96,17 @@ namespace SecApiFinancialPositionLoader.Services
                     DisplayName = companyConceptDto.Label,
                     Description = companyConceptDto.Description,
                     Taxanomy = companyConceptDto.Taxonomy,
-                    Facts = facts.Select(fact => new SecFact
-                    {
-                        Form = fact.Form,
-                        StartDate = fact.StartDate,
-                        EndDate = fact.EndDate,
-                        Frame = fact.Frame,
-                        Value = fact.Value
-                    }).ToList()
+                    Facts = facts
+                        .Select(fact => new SecFact
+                            {
+                                Form = fact.Form,
+                                StartDate = fact.StartDate,
+                                EndDate = fact.EndDate,
+                                Frame = fact.Frame,
+                                Value = fact.Value
+                            })
+                        .OrderByDescending(secFact => secFact.Frame)
+                        .ToList()
                 });
 
                 logger($"{facts.Count} numbers have been saved to Dynamo: [Partition Key: {triggerMsg.CikNumber} / Sort Key: {triggerMsg.FinancialStatement}_{triggerMsg.FinancialPosition}]");
