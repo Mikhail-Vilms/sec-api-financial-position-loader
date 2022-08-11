@@ -98,16 +98,19 @@ namespace SecApiFinancialPositionLoader.Services
                     Taxanomy = companyConceptDto.Taxonomy,
                     Facts = facts
                         .Select(fact => new SecFact
-                            {
-                                Form = fact.Form,
-                                StartDate = fact.StartDate,
-                                EndDate = fact.EndDate,
-                                Frame = fact.Frame,
-                                Value = fact.Value
-                            })
+                        {
+                            Form = fact.Form,
+                            StartDate = fact.StartDate,
+                            EndDate = fact.EndDate,
+                            Frame = fact.Frame,
+                            Value = fact.Value,
+                            DisplayValue = GetDisplayValue(fact.Value),
+                            Year = fact.Frame.Substring(2, 4),
+                            Quarter = fact.Frame.Substring(6, 2)
+                        })
                         .OrderByDescending(secFact => secFact.Frame)
                         .ToList()
-                });
+                }); ;
 
                 logger($"{facts.Count} numbers have been saved to Dynamo: [Partition Key: {triggerMsg.CikNumber} / Sort Key: {triggerMsg.FinancialStatement}_{triggerMsg.FinancialPosition}]");
             }
@@ -116,6 +119,28 @@ namespace SecApiFinancialPositionLoader.Services
                 logger($"Error occured while saving financial values to Dynamo: [{triggerMsg.TickerSymbol}/{triggerMsg.CikNumber}/{triggerMsg.FinancialPosition}]. Exception message: {ex}");
                 return;
             }
+        }
+
+        private string GetDisplayValue(string value)
+        {
+            bool success = long.TryParse(value, out long valueInt);
+            if (!success)
+            {
+                return value;
+            }
+            if (valueInt < 1000)
+            {
+                return valueInt.ToString();
+            }
+            if (1_000 <= valueInt && valueInt < 1_000_000)
+            {
+                return Math.Round((double)valueInt/1_000, 2).ToString()+"K";
+            }
+            if (1_000_000 <= valueInt && valueInt < 1_000_000_000)
+            {
+                return Math.Round((double)valueInt / 1_000_000, 2).ToString() + "M";
+            }
+            return Math.Round((double)valueInt / 1_000_000_000, 2).ToString() + "B";
         }
     }
 }

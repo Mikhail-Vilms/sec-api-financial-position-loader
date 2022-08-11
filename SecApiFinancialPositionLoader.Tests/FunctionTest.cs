@@ -10,7 +10,7 @@ namespace SecApiFinancialPositionLoader.Tests
 {
     public class FunctionTest
     {
-        // [Fact]
+        [Fact]
         public async Task TestToUpperFunction()
         {
             //LambdaTriggerMessage sqsMessage = new LambdaTriggerMessage()

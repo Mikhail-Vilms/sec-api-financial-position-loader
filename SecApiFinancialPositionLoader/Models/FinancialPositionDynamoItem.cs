@@ -30,5 +30,8 @@ namespace SecApiFinancialPositionLoader.Models
         public string EndDate { get; set; }
         public string Frame { get; set; }
         public string Value { get; set; }
+        public string DisplayValue { get; set; }
+        public string Year { get; set; }
+        public string Quarter { get; set; }
     }
 }
