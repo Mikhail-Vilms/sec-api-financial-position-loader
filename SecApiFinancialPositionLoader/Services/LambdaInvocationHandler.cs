@@ -50,11 +50,18 @@ namespace SecApiFinancialPositionLoader.Services
 
             try
             {
-                await _financialPositionLoader.Load(triggerMessage, Log);
+                await _financialPositionLoader.Load(
+                    new FinancialPostitionInfo(){
+                        CikNumber = triggerMessage.CikNumber,
+                        TickerSymbol = triggerMessage.TickerSymbol,
+                        FinancialStatement = triggerMessage.FinancialStatement,
+                        FinancialPosition = triggerMessage.FinancialPosition
+                    },
+                    Log);
             }
             catch (Exception ex)
             {
-                Log($"Failed to process message: triggerMessage; msg: {ex}");
+                Log($"FAILED TO PROCESS MESSAGE: triggerMessage; msg: {ex}");
             }
 
             Log($"Finished processing. <<<<<");
